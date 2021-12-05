@@ -12,7 +12,7 @@
 #define BRIGHTNESS  30
 #define LED_TYPE    WS2812B
 #define COLOR_ORDER GRB
-#define DOT_SPEED 100
+#define DOT_SPEED 200 // higher number == slower speed
 
 /* STRUCTURES */
 struct Dot {
@@ -23,10 +23,14 @@ struct Dot {
 CRGB leds[NUM_LEDS];
 CRGB yellow = CRGB::Orange;
 CRGB blue = CRGB::DarkBlue;
+CRGB black = CRGB::Black;
+CRGB white = CRGB::White;
+CRGB green = CRGB::Green;
 int mmap[NUM_ROWS][NUM_COLS] = {};
 int userInput = 0;
 int dir = 0; // 1 = up, 2 = left, 3 = down, 4 = right
 int debug = 1;
+int totalDots = 0;
 
 
 void setup() {
@@ -34,38 +38,19 @@ void setup() {
   FastLED.setBrightness(BRIGHTNESS);
   Serial.begin(9600);
 
-  // create 2d array of LED lights. j = x, i = y
-  // each value holds location of LED on strip 
-  int curLED = -1; // first light is a phantom light, so start at -1
-  for(int i = 16; i >= 0; i--) {
-    for(int j = 16; j >= 0; j--) {
-      mmap[j][i] = curLED;
-      curLED++;
-    }
+  // setup 2d array of light strip
+  detectMap();
 
-    // decrease curLED and increment to get next row
-    // if total rows are odd, make sure the last row(decrementing)
-    // down is checked
-    if(i >= 1) {
-      i--; // going to next row up
-      for(int j = 0; j <= 16; j++) {
-        mmap[j][i] = curLED;
-        curLED++;
-      }
-    }
-  }
-
-  // initialize border
-  for(int i = 0; i <= 16; i++) {
-    leds[mmap[0][i]] = CRGB::DarkBlue; // left
-    leds[mmap[i][0]] = CRGB::DarkBlue; // top
-    leds[mmap[16][i]] = CRGB::DarkBlue; // right
-    leds[mmap[i][16]] = CRGB::DarkBlue; // bottom
-  }
+  // 
+  initializeMapLayout();
 
   // initialize pacman
-  leds[mmap[8][8]] = CRGB::Orange;
-  pacman.x = 8; pacman.y = 8;
+  pacman.x = 8; pacman.y = 9;
+  leds[mmap[8][9]] = CRGB::Orange;
+
+  // add all the white dots
+  fillMapWithDots();
+  
   
 
   FastLED.show();
