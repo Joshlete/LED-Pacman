@@ -24,13 +24,14 @@ CRGB leds[NUM_LEDS];
 CRGB yellow = CRGB::Orange;
 CRGB blue = CRGB::DarkBlue;
 CRGB black = CRGB::Black;
-CRGB white = CRGB::White;
 CRGB green = CRGB::Green;
+CRGB white = CRGB::White;
+CHSV whitee(white, 50, 120);
 int mmap[NUM_ROWS][NUM_COLS] = {};
 int userInput = 0;
 int dir = 0; // 1 = up, 2 = left, 3 = down, 4 = right
 int debug = 1;
-int totalDots = 0;
+int totalDots = 1;
 
 
 void setup() {

@@ -27,11 +27,14 @@ void detectMap() {
 }
 
 void fillMapWithDots() {
+  totalDots = 0;
   for(int i = 16; i >= 0; i--) {
     for(int j = 16; j >= 0; j--) {
         if(leds[ mmap[i][j] ] == black) {
-          leds[ mmap[i][j] ] = CHSV(white, 50, 120);
-          totalDots++;
+          Serial.print(" ");
+          Serial.print(totalDots);
+          leds[ mmap[i][j] ] = whitee;
+          totalDots = totalDots +1;
         }
     }
   }

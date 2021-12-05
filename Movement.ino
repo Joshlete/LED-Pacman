@@ -47,6 +47,11 @@ int moveUser() {
   if(dir == 1) { // move up
     // move pacman up once
     if(leds[ mmap[pacman.x][pacman.y-1] ] != green) { // touched border
+      if(leds[ mmap[pacman.x][pacman.y-1] ] == whitee) {
+        totalDots--;
+        Serial.print("Total dots: ");
+        Serial.println(totalDots);
+      }
       leds[mmap[pacman.x][pacman.y]] = CRGB::Black; // delete pacmans original spot
       pacman.y--; // move pacmans spot up
       leds[mmap[pacman.x][pacman.y]] = CRGB::Orange; // update pacmans new spot
@@ -54,6 +59,11 @@ int moveUser() {
     } 
   } else if(dir == 2) { // move left
     if(leds[ mmap[pacman.x-1][pacman.y] ] != green) {
+      if(leds[ mmap[pacman.x-1][pacman.y] ] == whitee) {
+        totalDots--;
+        Serial.print("Total dots: ");
+        Serial.println(totalDots);
+      }
       leds[mmap[pacman.x][pacman.y]] = CRGB::Black;
       pacman.x--;
       leds[mmap[pacman.x][pacman.y]] = CRGB::Orange;
@@ -62,6 +72,11 @@ int moveUser() {
     
   } else if(dir == 3) { // move down
     if(leds[ mmap[pacman.x][pacman.y+1] ] != green) {
+      if(leds[ mmap[pacman.x][pacman.y+1] ] == whitee) {
+        totalDots--;
+        Serial.print("Total dots: ");
+        Serial.println(totalDots);
+      }
       leds[mmap[pacman.x][pacman.y]] = CRGB::Black;
       pacman.y++;
       leds[mmap[pacman.x][pacman.y]] = CRGB::Orange;
@@ -70,6 +85,11 @@ int moveUser() {
 
   } else if(dir == 4) { // move right
     if(leds[ mmap[pacman.x+1][pacman.y] ] != green) {
+      if(leds[ mmap[pacman.x+1][pacman.y] ] == whitee) {
+        totalDots--;
+        Serial.print("Total dots: ");
+        Serial.println(totalDots);
+      }
       leds[mmap[pacman.x][pacman.y]] = CRGB::Black;
       pacman.x++;
       leds[mmap[pacman.x][pacman.y]] = CRGB::Orange;
