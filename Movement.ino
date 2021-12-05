@@ -45,15 +45,15 @@ int moveUser() {
   // move in direction it currently going
   int wasMoved = 0;
   if(dir == 1) { // move up
-    // add next dot to linkedlist
-    if(pacman.y > 1) { // touched border
+    // move pacman up once
+    if(leds[ mmap[pacman.x][pacman.y-1] ] != blue) { // touched border
       leds[mmap[pacman.x][pacman.y]] = CRGB::Black; // delete pacmans original spot
       pacman.y--; // move pacmans spot up
       leds[mmap[pacman.x][pacman.y]] = CRGB::Orange; // update pacmans new spot
       wasMoved = 1;
     } 
   } else if(dir == 2) { // move left
-    if(pacman.x > 1) {
+    if(leds[ mmap[pacman.x-1][pacman.y] ] != blue) {
       leds[mmap[pacman.x][pacman.y]] = CRGB::Black;
       pacman.x--;
       leds[mmap[pacman.x][pacman.y]] = CRGB::Orange;
@@ -61,7 +61,7 @@ int moveUser() {
     }
     
   } else if(dir == 3) { // move down
-    if(pacman.y < 15) {
+    if(leds[ mmap[pacman.x][pacman.y+1] ] != blue) {
       leds[mmap[pacman.x][pacman.y]] = CRGB::Black;
       pacman.y++;
       leds[mmap[pacman.x][pacman.y]] = CRGB::Orange;
@@ -69,7 +69,7 @@ int moveUser() {
     }
 
   } else if(dir == 4) { // move right
-    if(pacman.x < 15) {
+    if(leds[ mmap[pacman.x+1][pacman.y] ] != blue) {
       leds[mmap[pacman.x][pacman.y]] = CRGB::Black;
       pacman.x++;
       leds[mmap[pacman.x][pacman.y]] = CRGB::Orange;

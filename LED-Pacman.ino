@@ -21,10 +21,13 @@ struct Dot {
 
 /* GLOBAL VARIABLES */
 CRGB leds[NUM_LEDS];
+CRGB yellow = CRGB::Orange;
+CRGB blue = CRGB::DarkBlue;
 int mmap[NUM_ROWS][NUM_COLS] = {};
 int userInput = 0;
 int dir = 0; // 1 = up, 2 = left, 3 = down, 4 = right
 int debug = 1;
+
 
 void setup() {
   FastLED.addLeds<LED_TYPE, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
@@ -54,10 +57,10 @@ void setup() {
 
   // initialize border
   for(int i = 0; i <= 16; i++) {
-    leds[mmap[0][i]] = CRGB::Blue; // left
-    leds[mmap[i][0]] = CRGB::Blue; // top
-    leds[mmap[16][i]] = CRGB::Blue; // right
-    leds[mmap[i][16]] = CRGB::Blue; // bottom
+    leds[mmap[0][i]] = CRGB::DarkBlue; // left
+    leds[mmap[i][0]] = CRGB::DarkBlue; // top
+    leds[mmap[16][i]] = CRGB::DarkBlue; // right
+    leds[mmap[i][16]] = CRGB::DarkBlue; // bottom
   }
 
   // initialize pacman
