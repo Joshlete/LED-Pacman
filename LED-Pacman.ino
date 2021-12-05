@@ -17,7 +17,7 @@
 /* STRUCTURES */
 struct Dot {
   int x, y;
-} food, snakeHead, tempDot;
+} food, pacman, tempDot;
 
 /* GLOBAL VARIABLES */
 CRGB leds[NUM_LEDS];
@@ -60,10 +60,22 @@ void setup() {
     leds[mmap[i][16]] = CRGB::Blue; // bottom
   }
 
+  // initialize pacman
+  leds[mmap[8][8]] = CRGB::Orange;
+  pacman.x = 8; pacman.y = 8;
+  
+
   FastLED.show();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // check if user pressed w,a,s,d key
+  changeDirection();
 
+  // move user in direction it's going
+  moveUser();
+  
 }
+
+/* resets program */
+void(* resetFunc) (void) = 0; // declare reset function at address 0
