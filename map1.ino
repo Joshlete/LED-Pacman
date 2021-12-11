@@ -138,7 +138,15 @@ void initializeMapLayout() {
   leds[ mmap[10][14] ] = green;
   leds[ mmap[12][14] ] = green;
   leds[ mmap[13][14] ] = green;
-  leds[ mmap[14][14] ] = green;
+  leds[ mmap[8][7] ] = enemyBaseColor;
+  leds[ mmap[8][6] ] = enemyBaseColor;
+  leds[ mmap[8][5] ] = enemyBaseColor;
+  leds[ mmap[8][4] ] = enemyBaseColor;
+  enemyBase1[0].x = 8; enemyBase1[0].y = 7;
+  enemyBase1[1].x = 8; enemyBase1[1].y = 6;
+  enemyBase1[2].x = 8; enemyBase1[2].y = 5;
+  enemyBase1[3].x = 8; enemyBase1[3].y = 4;
+  
   
   
 }

@@ -48,7 +48,9 @@ int moveUser() {
   int wasMoved = 0;
   if(dir == 1) { // move up
     // move pacman up once
-    if(leds[ mmap[pacman.x][pacman.y-1] ] != green) { // touched border
+    if(leds[ mmap[pacman.x][pacman.y-1] ] != green
+    && leds[ mmap[pacman.x][pacman.y-1] ] != enemyBaseColor
+    && leds[ mmap[pacman.x][pacman.y-1] ] != blue) { // touched border
       if(leds[ mmap[pacman.x][pacman.y-1] ] == whitee) {
         totalDots--;
         Serial.print("Total dots: ");
@@ -60,7 +62,9 @@ int moveUser() {
       wasMoved = 1;
     } 
   } else if(dir == 2) { // move left
-    if(leds[ mmap[pacman.x-1][pacman.y] ] != green) {
+    if(leds[ mmap[pacman.x-1][pacman.y] ] != green
+    && leds[ mmap[pacman.x-1][pacman.y] ] != enemyBaseColor
+    && leds[ mmap[pacman.x-1][pacman.y] ] != blue) {
       if(leds[ mmap[pacman.x-1][pacman.y] ] == whitee) {
         totalDots--;
         Serial.print("Total dots: ");
@@ -73,7 +77,9 @@ int moveUser() {
     }
     
   } else if(dir == 3) { // move down
-    if(leds[ mmap[pacman.x][pacman.y+1] ] != green) {
+    if(leds[ mmap[pacman.x][pacman.y+1] ] != green
+    && leds[ mmap[pacman.x][pacman.y+1] ] != enemyBaseColor
+    && leds[ mmap[pacman.x][pacman.y+1] ] != blue) {
       if(leds[ mmap[pacman.x][pacman.y+1] ] == whitee) {
         totalDots--;
         Serial.print("Total dots: ");
@@ -86,7 +92,9 @@ int moveUser() {
     }
 
   } else if(dir == 4) { // move right
-    if(leds[ mmap[pacman.x+1][pacman.y] ] != green) {
+    if(leds[ mmap[pacman.x+1][pacman.y] ] != green
+    && leds[ mmap[pacman.x+1][pacman.y] ] != enemyBaseColor
+    && leds[ mmap[pacman.x+1][pacman.y] ] != blue) {
       if(leds[ mmap[pacman.x+1][pacman.y] ] == whitee) {
         totalDots--;
         Serial.print("Total dots: ");
@@ -106,17 +114,33 @@ int moveUser() {
 
 /* ISR's for up, left, down, right movement from buttons */
 void button_up_ISR() {
-  if(leds[ mmap[pacman.x][pacman.y-1] ] != green) dir = 1;
+  if(leds[ mmap[pacman.x][pacman.y-1] ] != green
+  && leds[ mmap[pacman.x][pacman.y-1] ] != enemyBaseColor
+  && leds[ mmap[pacman.x][pacman.y-1] ] != blue) {
+    dir = 1;
+  }
 }
 
 void button_left_ISR() {
-  if(leds[ mmap[pacman.x-1][pacman.y] ] != green) dir = 2;
+  if(leds[ mmap[pacman.x-1][pacman.y] ] != green
+  && leds[ mmap[pacman.x-1][pacman.y] ] != enemyBaseColor
+  && leds[ mmap[pacman.x-1][pacman.y] ] != blue) {
+    dir = 2;
+  }
 }
 
 void button_down_ISR() {
-  if(leds[ mmap[pacman.x][pacman.y+1] ] != green) dir = 3;
+  if(leds[ mmap[pacman.x][pacman.y+1] ] != green
+  && leds[ mmap[pacman.x][pacman.y+1] ] != enemyBaseColor
+  && leds[ mmap[pacman.x][pacman.y+1] ] != blue) {
+    dir = 3;
+  }
 }
 
 void button_right_ISR() {
-  if(leds[ mmap[pacman.x+1][pacman.y] ] != green) dir = 4;
+  if(leds[ mmap[pacman.x+1][pacman.y] ] != green
+  && leds[ mmap[pacman.x+1][pacman.y] ] != enemyBaseColor
+  && leds[ mmap[pacman.x+1][pacman.y] ] != blue) {
+    dir = 4;
+  }
 }

@@ -14,10 +14,11 @@
 #define COLOR_ORDER GRB
 #define DOT_SPEED 200 // higher number == slower speed
 
-/* STRUCTURES */
+/********* STRUCTURES **********
+  enemy1 = dijkstras algorithm */
 struct Dot {
   int x, y;
-} food, pacman, tempDot;
+} pacman, enemy1;
 
 /* GLOBAL VARIABLES */
 CRGB leds[NUM_LEDS];
@@ -26,7 +27,8 @@ CRGB blue = CRGB::DarkBlue;
 CRGB black = CRGB::Black;
 CRGB green = CRGB::Green;
 CRGB white = CRGB::White;
-CHSV whitee(white, 50, 120);
+CHSV whitee(white, 25, 120);
+CHSV enemyBaseColor(85, 100, 120);
 int mmap[NUM_ROWS][NUM_COLS] = {};
 int userInput = 0;
 int dir = 0; // 1 = up, 2 = left, 3 = down, 4 = right
@@ -36,6 +38,7 @@ const int BUTTON_UP = 2;
 const int BUTTON_LEFT = 3;
 const int BUTTON_DOWN = 18;
 const int BUTTON_RIGHT = 19;
+struct Dot enemyBase1[3] = {};
 
 
 
@@ -64,10 +67,15 @@ void setup() {
 
   // initialize pacman
   pacman.x = 8; pacman.y = 9;
-  leds[mmap[8][9]] = CRGB::Orange;
+  leds[mmap[8][9]] = yellow;
 
   // add all the white dots
   fillMapWithDots();
+  
+  // initialize enemies
+  enemy1.x = 8; enemy1.y = 7;
+  leds[mmap[8][7]] = blue;
+
   
   
 
