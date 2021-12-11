@@ -33,7 +33,7 @@ void fillMapWithDots() {
         if(leds[ mmap[i][j] ] == black) {
           Serial.print(" ");
           Serial.print(totalDots);
-          leds[ mmap[i][j] ] = whitee;
+          leds[ mmap[i][j] ] = white;
           totalDots = totalDots +1;
         }
     }
