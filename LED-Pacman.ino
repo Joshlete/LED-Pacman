@@ -9,7 +9,7 @@
 #define NUM_LEDS    288
 #define NUM_ROWS    17
 #define NUM_COLS    17
-#define BRIGHTNESS  30
+#define BRIGHTNESS  15
 #define LED_TYPE    WS2812B
 #define COLOR_ORDER GRB
 #define DOT_SPEED 200 // higher number == slower speed
@@ -32,12 +32,29 @@ int userInput = 0;
 int dir = 0; // 1 = up, 2 = left, 3 = down, 4 = right
 int debug = 1;
 int totalDots = 1;
+const int BUTTON_UP = 2;
+const int BUTTON_LEFT = 3;
+const int BUTTON_DOWN = 18;
+const int BUTTON_RIGHT = 19;
+
 
 
 void setup() {
   FastLED.addLeds<LED_TYPE, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
   FastLED.setBrightness(BRIGHTNESS);
   Serial.begin(9600);
+
+  //initialize buttons
+  pinMode(BUTTON_UP, INPUT_PULLUP);
+  pinMode(BUTTON_LEFT, INPUT_PULLUP);
+  pinMode(BUTTON_DOWN, INPUT_PULLUP);
+  pinMode(BUTTON_RIGHT, INPUT_PULLUP);
+
+  // Initialize ISR's for buttons
+  attachInterrupt(digitalPinToInterrupt(BUTTON_UP), button_up_ISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_LEFT), button_left_ISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_DOWN), button_down_ISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_RIGHT), button_right_ISR, FALLING);
 
   // setup 2d array of light strip
   detectMap();
@@ -63,6 +80,8 @@ void loop() {
 
   // move user in direction it's going
   moveUser();
+
+  
   
 }
 

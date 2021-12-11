@@ -2,8 +2,10 @@
  * returns 1 if true, 0 if false          */
 int changeDirection() {
   int wasPressed = 0;
-  if(Serial.available() > 0) {
+  if(Serial.available() > 0 || digitalRead(BUTTON_UP) == LOW || digitalRead(BUTTON_LEFT) == LOW
+          || digitalRead(BUTTON_DOWN) == LOW || digitalRead(BUTTON_RIGHT) == LOW) {
     userInput = Serial.read();
+    delay(10);
 
     // check if user pressed w,a,s,d
     if(userInput == 'w' && leds[ mmap[pacman.x][pacman.y-1] ] != green) { // user wants to go up(w)
@@ -100,4 +102,21 @@ int moveUser() {
   FastLED.show();
   delay(DOT_SPEED);
   return wasMoved;
+}
+
+/* ISR's for up, left, down, right movement from buttons */
+void button_up_ISR() {
+  if(leds[ mmap[pacman.x][pacman.y-1] ] != green) dir = 1;
+}
+
+void button_left_ISR() {
+  if(leds[ mmap[pacman.x-1][pacman.y] ] != green) dir = 2;
+}
+
+void button_down_ISR() {
+  if(leds[ mmap[pacman.x][pacman.y+1] ] != green) dir = 3;
+}
+
+void button_right_ISR() {
+  if(leds[ mmap[pacman.x+1][pacman.y] ] != green) dir = 4;
 }
