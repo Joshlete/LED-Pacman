@@ -1,6 +1,6 @@
 /* checks if user inputted w, a, s, or d  *
  * returns 1 if true, 0 if false          */
-int changeDirection() {
+int changeDirection(struct Dot *dot) {
   int wasPressed = 0;
   if(Serial.available() > 0 || digitalRead(BUTTON_UP) == LOW || digitalRead(BUTTON_LEFT) == LOW
           || digitalRead(BUTTON_DOWN) == LOW || digitalRead(BUTTON_RIGHT) == LOW) {
@@ -9,22 +9,22 @@ int changeDirection() {
 
     // check if user pressed w,a,s,d
     if(userInput == 'w' && leds[ mmap[pacman.x][pacman.y-1] ] != green) { // user wants to go up(w)
-      dir = 1; 
+      dot->bearing = 1; 
       wasPressed = 1;
     }
     else if(userInput == 'a' && leds[ mmap[pacman.x-1][pacman.y] ] != green) { // user wants to go left(a)
-      dir = 2; 
+      dot->bearing = 2; 
       wasPressed = 1;
     }
     else if(userInput == 's' && leds[ mmap[pacman.x][pacman.y+1] ] != green) { // user wants to go down(s)
-      dir = 3; 
+      dot->bearing = 3; 
       wasPressed = 1;
     }
     else if(userInput == 'd' && leds[ mmap[pacman.x+1][pacman.y] ] != green) { // user wants to go right(d)
-      dir = 4; 
+      dot->bearing = 4; 
       wasPressed = 1;
     } else if(userInput == 'q') { // user wants to stop. FOR DEBUGGING
-      dir = 0; 
+      dot->bearing = 0; 
       if(debug) {
         Serial.print("User stopped at: (");
         Serial.print(pacman.x);
@@ -43,10 +43,10 @@ int changeDirection() {
  
 /* moves food in current direction its going. returns 1 if  *
  * successully moved. returns 0 if failed                   */
-int moveUser() {
+int moveUser(struct Dot *dot) {
   // move in direction it currently going
   int wasMoved = 0;
-  if(dir == 1) { // move up
+  if(dot->bearing == 1) { // move up
     // move pacman up once
     if(leds[ mmap[pacman.x][pacman.y-1] ] != green
     && leds[ mmap[pacman.x][pacman.y-1] ] != enemyBaseColor
@@ -61,7 +61,7 @@ int moveUser() {
       leds[mmap[pacman.x][pacman.y]] = CRGB::Orange; // update pacmans new spot
       wasMoved = 1;
     } 
-  } else if(dir == 2) { // move left
+  } else if(dot->bearing == 2) { // move left
     if(leds[ mmap[pacman.x-1][pacman.y] ] != green
     && leds[ mmap[pacman.x-1][pacman.y] ] != enemyBaseColor
     && leds[ mmap[pacman.x-1][pacman.y] ] != blue) {
@@ -76,7 +76,7 @@ int moveUser() {
       wasMoved = 1;
     }
     
-  } else if(dir == 3) { // move down
+  } else if(dot->bearing == 3) { // move down
     if(leds[ mmap[pacman.x][pacman.y+1] ] != green
     && leds[ mmap[pacman.x][pacman.y+1] ] != enemyBaseColor
     && leds[ mmap[pacman.x][pacman.y+1] ] != blue) {
@@ -91,7 +91,7 @@ int moveUser() {
       wasMoved = 1;
     }
 
-  } else if(dir == 4) { // move right
+  } else if(dot->bearing == 4) { // move right
     if(leds[ mmap[pacman.x+1][pacman.y] ] != green
     && leds[ mmap[pacman.x+1][pacman.y] ] != enemyBaseColor
     && leds[ mmap[pacman.x+1][pacman.y] ] != blue) {
@@ -117,7 +117,7 @@ void button_up_ISR() {
   if(leds[ mmap[pacman.x][pacman.y-1] ] != green
   && leds[ mmap[pacman.x][pacman.y-1] ] != enemyBaseColor
   && leds[ mmap[pacman.x][pacman.y-1] ] != blue) {
-    dir = 1;
+    pacman.bearing = 1;
   }
 }
 
@@ -125,7 +125,7 @@ void button_left_ISR() {
   if(leds[ mmap[pacman.x-1][pacman.y] ] != green
   && leds[ mmap[pacman.x-1][pacman.y] ] != enemyBaseColor
   && leds[ mmap[pacman.x-1][pacman.y] ] != blue) {
-    dir = 2;
+    pacman.bearing = 2;
   }
 }
 
@@ -133,7 +133,7 @@ void button_down_ISR() {
   if(leds[ mmap[pacman.x][pacman.y+1] ] != green
   && leds[ mmap[pacman.x][pacman.y+1] ] != enemyBaseColor
   && leds[ mmap[pacman.x][pacman.y+1] ] != blue) {
-    dir = 3;
+    pacman.bearing = 3;
   }
 }
 
@@ -141,6 +141,6 @@ void button_right_ISR() {
   if(leds[ mmap[pacman.x+1][pacman.y] ] != green
   && leds[ mmap[pacman.x+1][pacman.y] ] != enemyBaseColor
   && leds[ mmap[pacman.x+1][pacman.y] ] != blue) {
-    dir = 4;
+    pacman.bearing = 4;
   }
 }

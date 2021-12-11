@@ -14,10 +14,12 @@
 #define COLOR_ORDER GRB
 #define DOT_SPEED 200 // higher number == slower speed
 
-/********* STRUCTURES **********
-  enemy1 = dijkstras algorithm */
+/********* STRUCTURES ***************
+ *  enemy1 = move around randomly   *
+ *  enemy2 = dijkstras algorithm    *
+ ************************************/
 struct Dot {
-  int x, y;
+  int x, y, bearing;
 } pacman, enemy1;
 
 /* GLOBAL VARIABLES */
@@ -31,7 +33,6 @@ CHSV whitee(white, 25, 120);
 CHSV enemyBaseColor(85, 100, 120);
 int mmap[NUM_ROWS][NUM_COLS] = {};
 int userInput = 0;
-int dir = 0; // 1 = up, 2 = left, 3 = down, 4 = right
 int debug = 1;
 int totalDots = 1;
 const int BUTTON_UP = 2;
@@ -46,6 +47,7 @@ void setup() {
   FastLED.addLeds<LED_TYPE, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
   FastLED.setBrightness(BRIGHTNESS);
   Serial.begin(9600);
+  randomSeed(analogRead(0));
 
   //initialize buttons
   pinMode(BUTTON_UP, INPUT_PULLUP);
@@ -84,10 +86,10 @@ void setup() {
 
 void loop() {
   // check if user pressed w,a,s,d key
-  changeDirection();
+  changeDirection(&pacman);
 
   // move user in direction it's going
-  moveUser();
+  moveUser(&pacman);
 
   
   
